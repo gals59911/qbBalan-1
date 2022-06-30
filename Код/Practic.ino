@@ -1,23 +1,23 @@
-char income_symbol;
-int value=0;
-void front(int value)
+ char income_symbol;
+void back()
 {
  pinMode(3,INPUT);
  pinMode(6,INPUT);
  pinMode(5,OUTPUT);
  pinMode(11,OUTPUT);
  Serial.print("F");
- while(value!=30){
+ int value=0;
+ while(value!=255){
   analogWrite(3,value);
   analogWrite(6,value);
-  value+=25;
+  value+=15;
  }
 }
-void back(){
- pinMode(5,INPUT);
- pinMode(11,INPUT);
+void front(){
  pinMode(6,OUTPUT);
  pinMode(3,OUTPUT);
+  pinMode(5,INPUT);
+ pinMode(11,INPUT);
  Serial.print("B");
  int value = 0;
  while(value!=-255){
@@ -34,7 +34,7 @@ void back(){
       analogWrite(5,0);
       analogWrite(11,0);
   }
-  void leftfront(){
+  void rightback(){
     pinMode(6,INPUT);
     pinMode(3,INPUT);
     pinMode(5,OUTPUT);
@@ -42,7 +42,7 @@ void back(){
   analogWrite(5,150);
   analogWrite(11,50);
 }
-void rightfront(){
+void leftback(){
   pinMode(3,INPUT);
   pinMode(6,INPUT);
   pinMode(5,OUTPUT);
@@ -50,42 +50,42 @@ void rightfront(){
   analogWrite(5,50);
   analogWrite(11,150);
 }
-void leftback(){
+void rightfront(){
   pinMode(5,INPUT);
   pinMode(11,INPUT);
   pinMode(6,OUTPUT);
   pinMode(3,OUTPUT);
-  analogWrite(11,-150);
-  analogWrite(5,-50);
+  analogWrite(6,-150);
+  analogWrite(3,-50);
 }
-void rightback(){
+void leftfront(){
   pinMode(5,INPUT);
   pinMode(11,INPUT);
   pinMode(6,OUTPUT);
   pinMode(3,OUTPUT);
-  analogWrite(5,-150);
-  analogWrite(11,-50);
+  analogWrite(3,-150);
+  analogWrite(6,-50);
 }
 void razvorotR(){
   pinMode(3,INPUT);
   pinMode(6,INPUT);
   pinMode(5,OUTPUT);
   pinMode(11,OUTPUT);
-  analogWrite(5,10);
-  analogWrite(11,150);}
+  analogWrite(5,-50);
+  analogWrite(11,50);}
 void razvorotL(){
   pinMode(3,INPUT);
   pinMode(6,INPUT);
   pinMode(5,OUTPUT);
   pinMode(11,OUTPUT);
-  analogWrite(11,10);
-  analogWrite(5,150);
+  analogWrite(11,-50);
+  analogWrite(5,50);
  }   
 void setup() {
   Serial.begin(19200);
 }
 void loop(){
-while (Serial.available()>0)
+if (Serial.available()>0)
  {
   income_symbol = Serial.read();
   Serial.println(income_symbol);
@@ -93,7 +93,7 @@ while (Serial.available()>0)
   {
     case 'F': // Движение вперед
     stop();
-    front(value);
+    front();
     break;
     case 'B': // Движение назад
     stop();
@@ -125,11 +125,6 @@ while (Serial.available()>0)
     stop();
       razvorotL();
       break;
-    case '1':
-    stop();
-    int value=5;
-    Serial.println(value);
-    break;
    }
   }
 }
